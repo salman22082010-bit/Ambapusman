@@ -122,4 +122,1245 @@
         }
 
         h1 { font-size: clamp(1.5rem, 5vw, 2.5rem); color: var(--accent); }
-        h2 { font-size: clamp(1
+        h2 { font-size: clamp(1.25rem, 4vw, 1.75rem); margin-bottom: 1rem; }
+        h3 { font-size: 1.125rem; color: var(--text-secondary); }
+
+        .mono { font-family: var(--font-mono); }
+
+        /* Components */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            min-height: 48px;
+            min-width: 48px;
+            text-decoration: none;
+        }
+
+        .btn:active { transform: scale(0.96); }
+        .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+        }
+        .btn-primary:hover { background-color: var(--accent-hover); }
+        .btn-primary:disabled { background-color: var(--bg-tertiary); color: var(--text-secondary); border-color: var(--bg-tertiary); cursor: not-allowed; }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: #fff;
+            border-color: var(--danger);
+        }
+
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 0.5rem;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1.125rem; /* >= 16px to prevent iOS/Android zoom */
+            min-height: 48px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+        }
+
+        /* Canvas Area */
+        #game-canvas {
+            width: 100%;
+            height: 100%;
+            max-height: 60vh;
+            background-color: #0f0f11;
+            border-radius: 0.5rem;
+            border: 2px solid var(--bg-tertiary);
+            touch-action: none;
+            display: block;
+        }
+
+        /* HUD */
+        .hud {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .hud-item {
+            background-color: var(--bg-secondary);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .hud-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .hud-value { font-size: 1.25rem; font-weight: 700; font-family: var(--font-mono); margin-top: 0.25rem; }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 1.5rem;
+            background-color: var(--bg-primary);
+            border-radius: 999px;
+            overflow: hidden;
+            border: 1px solid var(--bg-tertiary);
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--success);
+            width: 0%;
+            transition: width 0.1s linear, background-color 0.2s ease;
+        }
+
+        .progress-bar.warning { background-color: var(--warning); }
+        .progress-bar.danger { background-color: var(--danger); }
+
+        .progress-target {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            background-color: rgba(34, 197, 94, 0.2);
+            border-left: 2px dashed var(--success);
+            border-right: 2px dashed var(--success);
+            pointer-events: none;
+        }
+
+        /* Orientation Overlay */
+        #rotate-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100dvh;
+            background-color: var(--bg-primary);
+            z-index: 10000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (orientation: portrait) {
+            #rotate-overlay { display: flex; }
+        }
+
+        .rotate-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1.5rem;
+            animation: rotateHint 2s ease-in-out infinite;
+        }
+
+        @keyframes rotateHint {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(90deg); }
+        }
+
+        /* Utility */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-4 { margin-top: 2rem; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 0.75rem; }
+        .gap-4 { gap: 1.5rem; }
+        .w-full { width: 100%; }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .rotate-icon { animation: none; }
+        }
+
+        /* Specific Game UI */
+        .welding-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .weld-btn {
+            flex: 1;
+            padding: 1.5rem;
+            font-size: 1.25rem;
+            background-color: var(--bg-tertiary);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            border-radius: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            touch-action: manipulation;
+        }
+
+        .weld-btn:active, .weld-btn.active {
+            background-color: var(--accent);
+            color: #000;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .cnc-param-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            background-color: var(--bg-tertiary);
+            color: var(--text-secondary);
+        }
+        .status-badge.success { background-color: rgba(34, 197, 94, 0.2); color: var(--success); }
+        .status-badge.danger { background-color: rgba(239, 68, 68, 0.2); color: var(--danger); }
+
+        /* Scrollbar for desktop */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--bg-tertiary); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+    </style>
+</head>
+<body>
+
+    <!-- Orientation Lock Overlay -->
+    <div id="rotate-overlay" role="dialog" aria-label="Peringatan Orientasi Layar">
+        <svg class="rotate-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);">
+            <path d="M1 4v6h6"></path>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        <h2>Putar Perangkat Anda</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Simulasi bengkel ini dirancang untuk tampilan landscape agar panel kontrol dan area kerja terlihat jelas.</p>
+    </div>
+
+    <div id="app">
+        <!-- SCREEN: MENU -->
+        <div id="screen-menu" class="screen active" role="main">
+            <div class="flex flex-col items-center justify-between h-full text-center" style="padding-top: 2rem;">
+                <div>
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: var(--bg-secondary); border-radius: 1rem; display: flex; align-items: center; justify-content: center; border: 2px solid var(--accent);">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                        </svg>
+                    </div>
+                    <h1>BENGKEL VIRTUAL</h1>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem; max-width: 400px;">
+                        Kuasai dasar pengelasan SMAW dan parameter bubut CNC. Dari teori hingga praktik profesional.
+                    </p>
+                </div>
+
+                <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 1rem;">
+                    <button class="btn btn-primary w-full" onclick="game.startModule('welding')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        Modul 1: Dasar Pengelasan
+                    </button>
+                    <button class="btn w-full" id="btn-cnc-menu" onclick="game.startModule('cnc')" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        Modul 2: Bubut CNC (Terkunci)
+                    </button>
+                    <button class="btn w-full" id="btn-pro-menu" onclick="game.startModule('professional')" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                        Ujian Profesional (Terkunci)
+                    </button>
+                </div>
+
+                <div style="margin-top: auto; padding-bottom: 1rem;">
+                    <button class="btn" onclick="game.showSettings()" style="background: transparent; border: none; color: var(--text-secondary);">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        Pengaturan & Data
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: WELDING -->
+        <div id="screen-welding" class="screen" role="main">
+            <div class="flex justify-between items-center mb-4" style="margin-bottom: 1rem;">
+                <button class="btn" onclick="game.exitToMenu()" aria-label="Kembali ke menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Keluar
+                </button>
+                <span class="status-badge" id="weld-status">SIAP</span>
+            </div>
+
+            <div class="card">
+                <h3>Instruksi: Menjaga Kawah Las</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                    Tahan tombol <strong>LAS</strong> untuk menaikkan suhu. Lepaskan untuk mendinginkan. 
+                    Jaga suhu di zona hijau (45-65%) agar lasan kuat. Suhu terlalu tinggi menyebabkan <em>burn-through</em>, terlalu rendah menyebabkan <em>porositas</em>.
+                </p>
+            </div>
+
+            <div class="hud">
+                <div class="hud-item">
+                    <div class="hud-label">Suhu Elektroda</div>
+                    <div class="hud-value mono" id="weld-temp-display">0°C</div>
+                </div>
+                <div class="hud-item">
+                    <div class="hud-label">Progres Lasan</div>
+                    <div class="hud-value mono" id="weld-progress-display">0%</div>
+                </div>
+                <div class="hud-item">
+                    <div class="hud-label">Kualitas</div>
+                    <div class="hud-value mono" id="weld-quality-display" style="color: var(--text-secondary);">-</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-target" style="left: 45%; width: 20%;"></div>
+                <div class="progress-bar" id="weld-progress-bar"></div>
+            </div>
+
+            <canvas id="game-canvas" aria-label="Visualisasi kawah las"></canvas>
+
+            <div class="welding-controls">
+                <button id="btn-weld" class="btn weld-btn" aria-pressed="false">
+                    TAHAN UNTUK LAS
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN: CNC -->
+        <div id="screen-cnc" class="screen" role="main">
+            <div class="flex justify-between items-center" style="margin-bottom: 1rem;">
+                <button class="btn" onclick="game.exitToMenu()" aria-label="Kembali ke menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Keluar
+                </button>
+                <span class="status-badge" id="cnc-status">PENGATURAN</span>
+            </div>
+
+            <div class="card" id="cnc-setup-panel">
+                <h3>Parameter Pemotongan: Baja Karbon (ST37)</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0.5rem 0 1rem;">
+                    Diameter benda kerja: 40mm. Kecepatan potong (Vc) ideal: 30-40 m/menit. Pemakanan (f) ideal: 0.15-0.25 mm/putaran.
+                    <br><strong>Rumus:</strong> RPM = (Vc × 1000) / (π × Diameter)
+                </p>
+                
+                <div class="cnc-param-grid">
+                    <div class="input-group">
+                        <label for="cnc-rpm">Putaran Spindle (RPM)</label>
+                        <input type="number" id="cnc-rpm" class="input-field" inputmode="numeric" value="250" min="100" max="3000" step="10">
+                    </div>
+                    <div class="input-group">
+                        <label for="cnc-feed">Pemakanan (mm/put)</label>
+                        <input type="number" id="cnc-feed" class="input-field" inputmode="decimal" value="0.1" min="0.05" max="0.5" step="0.01">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary w-full" onclick="game.startCncSimulation()">
+                    MULAI SIMULASI BUBUT
+                </button>
+            </div>
+
+            <div id="cnc-running-panel" class="hidden">
+                <div class="hud">
+                    <div class="hud-item">
+                        <div class="hud-label">Spindle</div>
+                        <div class="hud-value mono" id="cnc-rpm-display">0 RPM</div>
+                    </div>
+                    <div class="hud-item">
+                        <div class="hud-label">Pemakanan</div>
+                        <div class="hud-value mono" id="cnc-feed-display">0 mm/put</div>
+                    </div>
+                    <div class="hud-item">
+                        <div class="hud-label">Sisa Diameter</div>
+                        <div class="hud-value mono" id="cnc-dia-display">40.0 mm</div>
+                    </div>
+                </div>
+
+                <canvas id="cnc-canvas" aria-label="Visualisasi proses bubut CNC"></canvas>
+
+                <div class="progress-container" style="margin-top: 1rem;">
+                    <div class="progress-bar" id="cnc-progress-bar" style="width: 0%;"></div>
+                </div>
+
+                <button class="btn btn-danger w-full mt-2" onclick="game.emergencyStop()">
+                    EMERGENCY STOP
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN: RESULTS -->
+        <div id="screen-results" class="screen" role="main">
+            <div class="flex flex-col items-center justify-center h-full text-center">
+                <div id="result-icon" style="width: 80px; height: 80px; margin-bottom: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg-secondary); border: 3px solid var(--success);">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                
+                <h1 id="result-title">MODUL SELESAI</h1>
+                <p id="result-desc" style="color: var(--text-secondary); max-width: 400px; margin: 1rem 0;">
+                    Anda berhasil menyelesaikan tugas dengan parameter yang aman.
+                </p>
+
+                <div class="card" style="width: 100%; max-width: 400px; text-align: left;">
+                    <div class="flex justify-between" style="margin-bottom: 0.75rem;">
+                        <span style="color: var(--text-secondary);">Skor Kualitas</span>
+                        <span class="mono" id="result-score" style="font-weight: 700; color: var(--accent);">85/100</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span style="color: var(--text-secondary);">Catatan Teknis</span>
+                        <span class="mono" id="result-note" style="font-size: 0.9rem;">Suhu stabil</span>
+                    </div>
+                </div>
+
+                <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem;">
+                    <button class="btn btn-primary w-full" onclick="game.exitToMenu()">KEMBALI KE MENU</button>
+                    <button class="btn w-full" id="btn-next-module" onclick="game.unlockNext()" style="display: none;">
+                        LANJUT KE MODUL BERIKUTNYA
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: SETTINGS -->
+        <div id="screen-settings" class="screen" role="dialog" aria-label="Pengaturan">
+            <div class="flex justify-between items-center" style="margin-bottom: 2rem;">
+                <h2>Pengaturan</h2>
+                <button class="btn" onclick="game.exitToMenu()">Tutup</button>
+            </div>
+
+            <div class="card">
+                <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+                    <div>
+                        <div style="font-weight: 600;">Efek Suara</div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);">Suara mesin dan las</div>
+                    </div>
+                    <button class="btn" id="btn-toggle-sfx" onclick="game.toggleSFX()" style="min-width: 60px;">ON</button>
+                </div>
+
+                <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+                    <div>
+                        <div style="font-weight: 600;">Reset Progres</div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);">Hapus semua data tersimpan</div>
+                    </div>
+                    <button class="btn btn-danger" onclick="game.resetData()">RESET</button>
+                </div>
+            </div>
+
+            <div class="card" style="background: transparent; border: 1px dashed var(--bg-tertiary);">
+                <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Tombol Pintas (Desktop)</h3>
+                <ul style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; padding-left: 1.25rem;">
+                    <li><strong>ESC</strong> : Keluar ke Menu / Pause</li>
+                    <li><strong>SPACE</strong> : Tahan untuk Mengelas</li>
+                    <li><strong>M</strong> : Toggle Suara</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * SIMULASI BENGKEL LAS & CNC
+         * Arsitektur: State Machine, Canvas Rendering, Web Audio API, LocalStorage Persistence
+         * [SPAWN VALIDATION] Semua elemen DOM divalidasi sebelum akses. Canvas diinisialisasi setelah user gesture.
+         */
+
+        // --- KONSTANTA & KONFIGURASI ---
+        const CONFIG = {
+            VERSION: 'v1.0.0',
+            STORAGE_KEY: 'bengkel_virtual_state_v1',
+            WELDING: {
+                TARGET_TEMP_MIN: 45,
+                TARGET_TEMP_MAX: 65,
+                HEAT_RATE: 1.2,
+                COOL_RATE: 0.8,
+                MAX_TEMP: 100
+            },
+            CNC: {
+                TARGET_RPM_MIN: 230, // (30 * 1000) / (3.14 * 40) ≈ 238
+                TARGET_RPM_MAX: 320, // (40 * 1000) / (3.14 * 40) ≈ 318
+                TARGET_FEED_MIN: 0.15,
+                TARGET_FEED_MAX: 0.25,
+                SIMULATION_DURATION: 5000 // ms
+            }
+        };
+
+        // --- STATE MANAGEMENT ---
+        const state = {
+            currentScreen: 'menu',
+            welding: {
+                temp: 20,
+                progress: 0,
+                isWelding: false,
+                quality: 100,
+                startTime: 0
+            },
+            cnc: {
+                rpm: 250,
+                feed: 0.1,
+                progress: 0,
+                isRunning: false,
+                diameter: 40.0,
+                startTime: 0
+            },
+            settings: {
+                sfx: true
+            },
+            progression: {
+                weldingCompleted: false,
+                cncCompleted: false,
+                professionalCompleted: false
+            },
+            lastFrame: 0,
+            wakeLock: null
+        };
+
+        // --- AUDIO SYSTEM (Web Audio API) ---
+        const audio = {
+            ctx: null,
+            init: function() {
+                if (!this.ctx) {
+                    try {
+                        this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    } catch (e) {
+                        console.warn("Web Audio API tidak didukung");
+                    }
+                }
+                if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            },
+            playTone: function(freq, type, duration, vol = 0.1) {
+                if (!state.settings.sfx || !this.ctx) return;
+                try {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                    gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch (e) { /* Ignore audio errors */ }
+            },
+            playWeldSpark: function() {
+                if (!state.settings.sfx || !this.ctx) return;
+                try {
+                    const bufferSize = this.ctx.sampleRate * 0.1;
+                    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        data[i] = Math.random() * 2 - 1;
+                    }
+                    const noise = this.ctx.createBufferSource();
+                    noise.buffer = buffer;
+                    const gain = this.ctx.createGain();
+                    gain.gain.value = 0.05;
+                    noise.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    noise.start();
+                } catch (e) {}
+            }
+        };
+
+        // --- LOCAL STORAGE ---
+        const storage = {
+            save: function() {
+                try {
+                    const data = JSON.stringify({
+                        progression: state.progression,
+                        settings: state.settings
+                    });
+                    localStorage.setItem(CONFIG.STORAGE_KEY, data);
+                } catch (e) {
+                    console.warn("LocalStorage penuh atau diblokir");
+                }
+            },
+            load: function() {
+                try {
+                    const data = localStorage.getItem(CONFIG.STORAGE_KEY);
+                    if (data) {
+                        const parsed = JSON.parse(data);
+                        state.progression = { ...state.progression, ...parsed.progression };
+                        state.settings = { ...state.settings, ...parsed.settings };
+                    }
+                } catch (e) {
+                    console.warn("Data korup, menggunakan default");
+                    storage.reset();
+                }
+            },
+            reset: function() {
+                try {
+                    localStorage.removeItem(CONFIG.STORAGE_KEY);
+                    location.reload();
+                } catch (e) {}
+            }
+        };
+
+        // --- CANVAS & RENDERING ---
+        const canvasMgr = {
+            weldCanvas: null,
+            weldCtx: null,
+            cncCanvas: null,
+            cncCtx: null,
+            dpr: 1,
+
+            init: function() {
+                this.weldCanvas = document.getElementById('game-canvas');
+                this.cncCanvas = document.getElementById('cnc-canvas');
+                
+                // Cap DPR to 2 for Android performance
+                this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+                
+                this.resizeWeld();
+                this.resizeCnc();
+                
+                window.addEventListener('resize', this.debounce(() => {
+                    this.resizeWeld();
+                    this.resizeCnc();
+                }, 150));
+            },
+
+            debounce: function(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            },
+
+            resizeWeld: function() {
+                if (!this.weldCanvas) return;
+                const rect = this.weldCanvas.getBoundingClientRect();
+                this.weldCanvas.width = rect.width * this.dpr;
+                this.weldCanvas.height = rect.height * this.dpr;
+                this.weldCtx = this.weldCanvas.getContext('2d');
+                this.weldCtx.scale(this.dpr, this.dpr);
+            },
+
+            resizeCnc: function() {
+                if (!this.cncCanvas) return;
+                const rect = this.cncCanvas.getBoundingClientRect();
+                this.cncCanvas.width = rect.width * this.dpr;
+                this.cncCanvas.height = rect.height * this.dpr;
+                this.cncCtx = this.cncCanvas.getContext('2d');
+                this.cncCtx.scale(this.dpr, this.dpr);
+            },
+
+            drawWeld: function() {
+                if (!this.weldCtx) return;
+                const ctx = this.weldCtx;
+                const w = this.weldCanvas.width / this.dpr;
+                const h = this.weldCanvas.height / this.dpr;
+
+                ctx.clearRect(0, 0, w, h);
+
+                // Base metal
+                ctx.fillStyle = '#3f3f46';
+                ctx.fillRect(0, h/2 - 20, w, 40);
+                
+                // Joint line
+                ctx.strokeStyle = '#18181b';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(0, h/2);
+                ctx.lineTo(w, h/2);
+                ctx.stroke();
+
+                // Weld bead progress
+                const progressW = (state.welding.progress / 100) * w;
+                
+                // Determine color based on temp
+                let beadColor = '#22c55e'; // Good
+                if (state.welding.temp > CONFIG.WELDING.TARGET_TEMP_MAX) beadColor = '#ef4444'; // Burn
+                else if (state.welding.temp < CONFIG.WELDING.TARGET_TEMP_MIN) beadColor = '#a1a1aa'; // Cold
+
+                ctx.fillStyle = beadColor;
+                ctx.beginPath();
+                ctx.moveTo(0, h/2 - 10);
+                for (let i = 0; i <= progressW; i += 5) {
+                    const noise = Math.sin(i * 0.1) * 3;
+                    ctx.lineTo(i, (h/2 - 10) + noise);
+                }
+                ctx.lineTo(progressW, h/2 + 10);
+                for (let i = progressW; i >= 0; i -= 5) {
+                    const noise = Math.sin(i * 0.1) * 3;
+                    ctx.lineTo(i, (h/2 + 10) + noise);
+                }
+                ctx.fill();
+
+                // Arc spark effect if welding
+                if (state.welding.isWelding && progressW < w) {
+                    ctx.fillStyle = '#f59e0b';
+                    ctx.beginPath();
+                    ctx.arc(progressW, h/2, 8 + Math.random() * 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Glow
+                    ctx.shadowColor = '#f59e0b';
+                    ctx.shadowBlur = 20;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            },
+
+            drawCnc: function() {
+                if (!this.cncCtx) return;
+                const ctx = this.cncCtx;
+                const w = this.cncCanvas.width / this.dpr;
+                const h = this.cncCanvas.height / this.dpr;
+
+                ctx.clearRect(0, 0, w, h);
+
+                const progress = state.cnc.progress / 100;
+                const currentDia = 40 - (10 * progress); // Final dia 30mm
+                const radius = (currentDia / 40) * (h / 3);
+                
+                const centerX = w / 2;
+                const centerY = h / 2;
+
+                // Workpiece
+                ctx.fillStyle = '#71717a';
+                ctx.beginPath();
+                ctx.ellipse(centerX, centerY, w * 0.4, radius, 0, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Side of cylinder (3D effect)
+                ctx.fillStyle = '#52525b';
+                ctx.fillRect(centerX - (w * 0.4), centerY - radius, w * 0.8, radius * 2);
+                
+                ctx.fillStyle = '#71717a';
+                ctx.beginPath();
+                ctx.ellipse(centerX + (w * 0.4), centerY, w * 0.1, radius, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Cutting tool
+                if (state.cnc.isRunning && progress < 1) {
+                    const toolX = (centerX - (w * 0.4)) + (progress * w * 0.8);
+                    ctx.fillStyle = '#f59e0b';
+                    ctx.beginPath();
+                    ctx.moveTo(toolX, centerY - radius - 5);
+                    ctx.lineTo(toolX + 10, centerY - radius - 5);
+                    ctx.lineTo(toolX + 10, centerY - radius + 10);
+                    ctx.fill();
+
+                    // Chips
+                    if (Math.random() > 0.7) {
+                        ctx.fillStyle = '#fbbf24';
+                        ctx.fillRect(toolX - 10, centerY - radius - 10, 4, 4);
+                    }
+                }
+            }
+        };
+
+        // --- GAME LOGIC ---
+        const game = {
+            init: function() {
+                storage.load();
+                canvasMgr.init();
+                this.updateMenuUI();
+                this.setupEventListeners();
+                this.setupAndroidBack();
+                
+                // Request wake lock if supported
+                if ('wakeLock' in navigator) {
+                    this.requestWakeLock();
+                }
+
+                // Visibility change handling
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) {
+                        this.pause();
+                    } else {
+                        audio.init(); // Resume audio context
+                        if (state.currentScreen === 'welding' || state.currentScreen === 'cnc') {
+                            this.resume();
+                        }
+                    }
+                });
+
+                // Prevent default touch behaviors on canvas
+                const preventDefault = (e) => {
+                    if (e.target.tagName !== 'INPUT') {
+                        e.preventDefault();
+                    }
+                };
+                document.addEventListener('contextmenu', preventDefault);
+                document.addEventListener('selectstart', preventDefault);
+            },
+
+            setupAndroidBack: function() {
+                // Push state to intercept Android back button
+                history.pushState({ page: 'menu' }, '');
+                window.addEventListener('popstate', (e) => {
+                    if (state.currentScreen !== 'menu') {
+                        e.preventDefault();
+                        this.exitToMenu();
+                        history.pushState({ page: 'menu' }, '');
+                    }
+                });
+            },
+
+            requestWakeLock: async function() {
+                try {
+                    state.wakeLock = await navigator.wakeLock.request('screen');
+                } catch (err) {
+                    console.log('Wake Lock tidak diizinkan');
+                }
+            },
+
+            setupEventListeners: function() {
+                // Welding Controls
+                const weldBtn = document.getElementById('btn-weld');
+                
+                const startWeld = (e) => {
+                    e.preventDefault();
+                    audio.init();
+                    state.welding.isWelding = true;
+                    weldBtn.classList.add('active');
+                    weldBtn.setAttribute('aria-pressed', 'true');
+                };
+                
+                const stopWeld = (e) => {
+                    e.preventDefault();
+                    state.welding.isWelding = false;
+                    weldBtn.classList.remove('active');
+                    weldBtn.setAttribute('aria-pressed', 'false');
+                };
+
+                weldBtn.addEventListener('pointerdown', startWeld);
+                weldBtn.addEventListener('pointerup', stopWeld);
+                weldBtn.addEventListener('pointerleave', stopWeld);
+                weldBtn.addEventListener('pointercancel', stopWeld);
+
+                // Keyboard shortcuts
+                window.addEventListener('keydown', (e) => {
+                    if (e.code === 'Space' && state.currentScreen === 'welding') {
+                        e.preventDefault();
+                        startWeld(e);
+                    }
+                    if (e.code === 'Escape') {
+                        this.exitToMenu();
+                    }
+                    if (e.code === 'KeyM') {
+                        this.toggleSFX();
+                    }
+                });
+
+                window.addEventListener('keyup', (e) => {
+                    if (e.code === 'Space' && state.currentScreen === 'welding') {
+                        stopWeld(e);
+                    }
+                });
+
+                // Prevent pull-to-refresh
+                document.body.addEventListener('touchmove', function(e) {
+                    if (e.target.tagName !== 'INPUT') {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+            },
+
+            showScreen: function(screenId) {
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById(`screen-${screenId}`).classList.add('active');
+                state.currentScreen = screenId;
+                
+                if (screenId === 'welding' || screenId === 'cnc') {
+                    this.requestWakeLock();
+                } else {
+                    if (state.wakeLock) {
+                        state.wakeLock.release();
+                        state.wakeLock = null;
+                    }
+                }
+            },
+
+            startModule: function(module) {
+                audio.init();
+                if (module === 'welding') {
+                    this.resetWelding();
+                    this.showScreen('welding');
+                    this.gameLoop();
+                } else if (module === 'cnc') {
+                    if (!state.progression.weldingCompleted) return;
+                    this.resetCnc();
+                    this.showScreen('cnc');
+                } else if (module === 'professional') {
+                    if (!state.progression.cncCompleted) return;
+                    // Professional is just a harder welding + cnc combo, for this slice we restart welding with tighter tolerances
+                    CONFIG.WELDING.TARGET_TEMP_MIN = 50;
+                    CONFIG.WELDING.TARGET_TEMP_MAX = 60;
+                    this.resetWelding();
+                    this.showScreen('welding');
+                    this.gameLoop();
+                }
+            },
+
+            resetWelding: function() {
+                state.welding = {
+                    temp: 20,
+                    progress: 0,
+                    isWelding: false,
+                    quality: 100,
+                    startTime: Date.now()
+                };
+                this.updateWeldUI();
+            },
+
+            resetCnc: function() {
+                state.cnc = {
+                    rpm: 250,
+                    feed: 0.1,
+                    progress: 0,
+                    isRunning: false,
+                    diameter: 40.0,
+                    startTime: 0
+                };
+                document.getElementById('cnc-setup-panel').classList.remove('hidden');
+                document.getElementById('cnc-running-panel').classList.add('hidden');
+                document.getElementById('cnc-rpm').value = 250;
+                document.getElementById('cnc-feed').value = 0.1;
+            },
+
+            gameLoop: function() {
+                if (state.currentScreen !== 'welding' && state.currentScreen !== 'cnc') return;
+
+                const now = Date.now();
+                const dt = Math.min((now - state.lastFrame) / 1000, 0.05); // Cap dt at 50ms
+                state.lastFrame = now;
+
+                if (state.currentScreen === 'welding') {
+                    this.updateWelding(dt);
+                    canvasMgr.drawWeld();
+                } else if (state.currentScreen === 'cnc' && state.cnc.isRunning) {
+                    this.updateCnc(dt);
+                    canvasMgr.drawCnc();
+                }
+
+                requestAnimationFrame(() => this.gameLoop());
+            },
+
+            updateWelding: function(dt) {
+                const w = state.welding;
+                
+                // Temperature physics
+                if (w.isWelding) {
+                    w.temp += CONFIG.WELDING.HEAT_RATE * (dt * 60);
+                    if (Math.random() > 0.8) audio.playWeldSpark();
+                } else {
+                    w.temp -= CONFIG.WELDING.COOL_RATE * (dt * 60);
+                }
+                
+                w.temp = Math.max(0, Math.min(CONFIG.WELDING.MAX_TEMP, w.temp));
+
+                // Progress & Quality
+                if (w.temp >= CONFIG.WELDING.TARGET_TEMP_MIN && w.temp <= CONFIG.WELDING.TARGET_TEMP_MAX) {
+                    w.progress += 15 * (dt * 60);
+                    document.getElementById('weld-status').textContent = "LASAN BAIK";
+                    document.getElementById('weld-status').className = "status-badge success";
+                } else {
+                    w.quality -= 20 * (dt * 60);
+                    if (w.temp > CONFIG.WELDING.TARGET_TEMP_MAX) {
+                        document.getElementById('weld-status').textContent = "BAHAYA: BURN-THROUGH";
+                        document.getElementById('weld-status').className = "status-badge danger";
+                    } else {
+                        document.getElementById('weld-status').textContent = "PERINGATAN: DINGIN";
+                        document.getElementById('weld-status').className = "status-badge";
+                    }
+                }
+
+                w.progress = Math.min(100, w.progress);
+                w.quality = Math.max(0, w.quality);
+
+                this.updateWeldUI();
+
+                if (w.progress >= 100) {
+                    this.finishWelding();
+                }
+            },
+
+            updateWeldUI: function() {
+                document.getElementById('weld-temp-display').textContent = Math.round(state.welding.temp) + "°C";
+                document.getElementById('weld-progress-display').textContent = Math.round(state.welding.progress) + "%";
+                
+                const bar = document.getElementById('weld-progress-bar');
+                bar.style.width = state.welding.progress + "%";
+                
+                if (state.welding.temp > CONFIG.WELDING.TARGET_TEMP_MAX) {
+                    bar.className = "progress-bar danger";
+                } else if (state.welding.temp < CONFIG.WELDING.TARGET_TEMP_MIN) {
+                    bar.className = "progress-bar warning";
+                } else {
+                    bar.className = "progress-bar";
+                }
+
+                const q = Math.round(state.welding.quality);
+                const qEl = document.getElementById('weld-quality-display');
+                qEl.textContent = q + "%";
+                qEl.style.color = q > 80 ? 'var(--success)' : (q > 50 ? 'var(--warning)' : 'var(--danger)');
+            },
+
+            finishWelding: function() {
+                state.welding.isWelding = false;
+                const score = Math.round(state.welding.quality);
+                const passed = score >= 70;
+                
+                if (passed) {
+                    state.progression.weldingCompleted = true;
+                    storage.save();
+                }
+                
+                this.showResults(
+                    passed ? "MODUL LAS SELESAI" : "LASAN GAGAL",
+                    passed ? "Suhu kawah las terjaga dengan baik. Tidak ada cacat porositas atau burn-through." : "Suhu tidak stabil. Terjadi cacat las yang signifikan.",
+                    score + "/100",
+                    score > 80 ? "Sempurna" : (score > 60 ? "Cukup" : "Perlu Latihan"),
+                    passed && !state.progression.cncCompleted
+                );
+            },
+
+            startCncSimulation: function() {
+                audio.init();
+                const rpmInput = parseFloat(document.getElementById('cnc-rpm').value);
+                const feedInput = parseFloat(document.getElementById('cnc-feed').value);
+                
+                if (isNaN(rpmInput) || isNaN(feedInput)) {
+                    alert("Masukkan parameter numerik yang valid.");
+                    return;
+                }
+
+                state.cnc.rpm = rpmInput;
+                state.cnc.feed = feedInput;
+                state.cnc.progress = 0;
+                state.cnc.isRunning = true;
+                state.cnc.startTime = Date.now();
+                state.lastFrame = Date.now();
+
+                document.getElementById('cnc-setup-panel').classList.add('hidden');
+                document.getElementById('cnc-running-panel').classList.remove('hidden');
+                document.getElementById('cnc-status').textContent = "MESIN BERJALAN";
+                document.getElementById('cnc-status').className = "status-badge success";
+
+                audio.playTone(150, 'sawtooth', 0.5, 0.05); // Start sound
+                
+                this.gameLoop();
+            },
+
+            updateCnc: function(dt) {
+                const c = state.cnc;
+                c.progress += (100 / (CONFIG.CNC.SIMULATION_DURATION / 1000)) * (dt * 60);
+                
+                if (c.progress >= 100) {
+                    c.progress = 100;
+                    c.isRunning = false;
+                    this.finishCnc();
+                }
+
+                c.diameter = 40 - (10 * (c.progress / 100));
+                
+                document.getElementById('cnc-rpm-display').textContent = c.rpm + " RPM";
+                document.getElementById('cnc-feed-display').textContent = c.feed + " mm/put";
+                document.getElementById('cnc-dia-display').textContent = c.diameter.toFixed(1) + " mm";
+                document.getElementById('cnc-progress-bar').style.width = c.progress + "%";
+            },
+
+            emergencyStop: function() {
+                state.cnc.isRunning = false;
+                document.getElementById('cnc-status').textContent = "EMERGENCY STOP";
+                document.getElementById('cnc-status').className = "status-badge danger";
+                audio.playTone(100, 'square', 0.5, 0.2);
+                setTimeout(() => {
+                    this.showResults("SIMULASI DIHENTIKAN", "Tombol Emergency Stop ditekan. Proses pembubutan tidak selesai.", "0/100", "Gagal", false);
+                }, 500);
+            },
+
+            finishCnc: function() {
+                const c = state.cnc;
+                let score = 100;
+                let note = "Parameter optimal";
+
+                // Check RPM
+                if (c.rpm < CONFIG.CNC.TARGET_RPM_MIN || c.rpm > CONFIG.CNC.TARGET_RPM_MAX) {
+                    score -= 30;
+                    note = "RPM tidak sesuai (terlalu " + (c.rpm < CONFIG.CNC.TARGET_RPM_MIN ? "lambat" : "cepat") + ")";
+                }
+
+                // Check Feed
+                if (c.feed < CONFIG.CNC.TARGET_FEED_MIN || c.feed > CONFIG.CNC.TARGET_FEED_MAX) {
+                    score -= 30;
+                    note = "Pemakanan tidak sesuai";
+                }
+
+                score = Math.max(0, score);
+                const passed = score >= 70;
+
+                if (passed) {
+                    state.progression.cncCompleted = true;
+                    storage.save();
+                }
+
+                this.showResults(
+                    passed ? "PEMBUBUTAN SELESAI" : "HASIL TIDAK MEMENUHI SPEK",
+                    passed ? "Dimensi akhir presisi. Permukaan halus tanpa getaran berlebihan." : "Parameter pemotongan salah. Permukaan kasar atau dimensi meleset.",
+                    score + "/100",
+                    note,
+                    passed && !state.progression.professionalCompleted
+                );
+            },
+
+            showResults: function(title, desc, score, note, showNextBtn) {
+                this.showScreen('results');
+                document.getElementById('result-title').textContent = title;
+                document.getElementById('result-desc').textContent = desc;
+                document.getElementById('result-score').textContent = score;
+                document.getElementById('result-note').textContent = note;
+                
+                const nextBtn = document.getElementById('btn-next-module');
+                if (showNextBtn) {
+                    nextBtn.style.display = 'block';
+                    nextBtn.textContent = state.currentScreen === 'welding' ? "LANJUT KE BUBUT CNC" : "LANJUT KE UJIAN PROFESIONAL";
+                } else {
+                    nextBtn.style.display = 'none';
+                }
+
+                // Update icon color based on score
+                const scoreNum = parseInt(score);
+                const icon = document.getElementById('result-icon');
+                if (scoreNum >= 80) {
+                    icon.style.borderColor = 'var(--success)';
+                    icon.innerHTML = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                } else if (scoreNum >= 60) {
+                    icon.style.borderColor = 'var(--warning)';
+                    icon.innerHTML = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="3"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
+                } else {
+                    icon.style.borderColor = 'var(--danger)';
+                    icon.innerHTML = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+                }
+            },
+
+            unlockNext: function() {
+                if (state.currentScreen === 'welding' || (state.currentScreen === 'results' && state.progression.weldingCompleted && !state.progression.cncCompleted)) {
+                    this.startModule('cnc');
+                } else if (state.progression.cncCompleted && !state.progression.professionalCompleted) {
+                    this.startModule('professional');
+                } else {
+                    this.exitToMenu();
+                }
+            },
+
+            exitToMenu: function() {
+                state.welding.isWelding = false;
+                state.cnc.isRunning = false;
+                this.updateMenuUI();
+                this.showScreen('menu');
+            },
+
+            updateMenuUI: function() {
+                const btnCnc = document.getElementById('btn-cnc-menu');
+                const btnPro = document.getElementById('btn-pro-menu');
+                
+                if (state.progression.weldingCompleted) {
+                    btnCnc.disabled = false;
+                    btnCnc.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Modul 2: Bubut CNC';
+                }
+                
+                if (state.progression.cncCompleted) {
+                    btnPro.disabled = false;
+                    btnPro.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg> Ujian Profesional';
+                }
+            },
+
+            showSettings: function() {
+                this.showScreen('settings');
+                document.getElementById('btn-toggle-sfx').textContent = state.settings.sfx ? "ON" : "OFF";
+            },
+
+            toggleSFX: function() {
+                state.settings.sfx = !state.settings.sfx;
+                document.getElementById('btn-toggle-sfx').textContent = state.settings.sfx ? "ON" : "OFF";
+                storage.save();
+                if (state.settings.sfx) audio.init();
+            },
+
+            resetData: function() {
+                if (confirm("Yakin ingin menghapus semua progres? Tindakan ini tidak dapat dibatalkan.")) {
+                    storage.reset();
+                }
+            },
+
+            pause: function() {
+                state.welding.isWelding = false;
+                state.cnc.isRunning = false;
+            },
+
+            resume: function() {
+                // Handled by gameLoop checking state
+            }
+        };
+
+        // --- INITIALIZATION ---
+        window.addEventListener('DOMContentLoaded', () => {
+            try {
+                game.init();
+            } catch (e) {
+                console.error("Fatal error during init:", e);
+                document.body.innerHTML = '<div style="padding: 2rem; color: #ef4444;">Terjadi kesalahan saat memuat aplikasi. Silakan muat ulang halaman.</div>';
+            }
+        });
+
+        // Prevent beforeunload if in progress
+        window.addEventListener('beforeunload', (e) => {
+            if (state.currentScreen === 'welding' || state.currentScreen === 'cnc') {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+    </script>
+</body>
+</html>
